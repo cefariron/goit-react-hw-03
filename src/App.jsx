@@ -1,14 +1,20 @@
-import './App.css'
+import { Formik, Form, Field } from "formik";
+import "./App.css";
 
 function App() {
-
   return (
     <>
       <div>
-        <p>Hello</p>
+        <h1>Phone book</h1>
+        <Formik>
+          <Form>
+            <Field />
+            <Field />
+          </Form>
+        </Formik>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
