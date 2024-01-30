@@ -1,11 +1,13 @@
-export const Contact = ({ id, name, number }) => {
+import css from '../Contact/Contact.module.css';
+
+export const Contact = ({ id, name, number, onDelete }) => {
   return (
-      <div>
+      <div className={css.container}>
         <div>
           <p>{name}</p>
           <p>{number}</p>
         </div>
-        <button type="button">Delete</button>
+        <button type="button" onClick={() => onDelete(id)}>Delete</button>
       </div>
     )
   };

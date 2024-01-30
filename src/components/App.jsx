@@ -1,25 +1,48 @@
-// import { Formik, Form, Field } from "formik";
+import { useState } from "react";
+import { useEffect } from "react";
 import { ContactForm } from "./ContactForm/ContactForm";
 import { SearchBox } from "./SearchBox/SearchBox";
-import {ContactList} from './ContactList/ContactList';
+import { ContactList } from "./ContactList/ContactList";
+import { save, load } from '../common/localstorage';
 // import userdata from '../userdata/userdata.json';
-// import "./App.css";
-const userdata = [
-  {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-  {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-  {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-  {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-]
+import "./App.css";
 
+const getInitContacts = () => {
+  const currContacts = load("contacts");
+  return currContacts ? currContacts : [];
+}
 
 export const App = () => {
+  const [inputValue, setInputValue] = useState("");
+  const [contactList, setContactList] = useState(getInitContacts);
+  
+  const visibleUser = contactList.filter((user) =>
+    user.name.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  useEffect(() => {
+    save("contacts", contactList)
+  }, [contactList])
+
+  const addContact = newContact => {
+    setContactList(contacts => {
+      return [...contacts, newContact]
+    })
+  };
+
+  const removeContact = userId => {
+    setContactList(contacts => {
+      return contacts.filter(contact => contact.id !== userId);
+    });
+  };
+
   return (
     <>
       <div>
-        <h1>Phonebook</h1>
-        <ContactForm />
-        <SearchBox />
-        <ContactList data={userdata}/>
+        <h1 className="title">Phonebook</h1>
+        <ContactForm onAdd={addContact}/>
+        <SearchBox value={inputValue} onChange={setInputValue} />
+        <ContactList data={visibleUser} onDelete={removeContact}/>
       </div>
     </>
   );
