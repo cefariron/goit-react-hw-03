@@ -7,10 +7,10 @@ export const Contact = ({ id, name, number, onDelete }) => {
     <div className={css.container}>
       <div>
         <p>
-          <MdLocalPhone  className={css.icon}/> {name}
+          <IoMdContact className={css.icon} /> {name}
         </p>
         <p>
-          <IoMdContact  className={css.icon}/> {number}
+          <MdLocalPhone className={css.icon} /> {number}
         </p>
       </div>
       <button type="button" onClick={() => onDelete(id)}>
